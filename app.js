@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Elements Reference
+
   const inputs = {
     companyName: document.getElementById('input-company-name'),
     companyAddress: document.getElementById('input-company-address'),
@@ -34,10 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const addItemBtn = document.getElementById('add-item-btn');
   const printBtn = document.getElementById('print-btn');
 
-  // Set initial date to today
   inputs.invoiceDate.valueAsDate = new Date();
 
-  // Initial State
   let items = [
     { id: generateId(), desc: 'Web Design Services', qty: 1, price: 1500 },
     { id: generateId(), desc: 'Hosting Setup', qty: 1, price: 250 }
@@ -52,8 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return symbol + parseFloat(num).toFixed(2);
   }
 
-  // --- High-Performance Sync for Text Fields ---
-  // We use direct textContent updates on the exact DOM nodes to avoid reflows where possible
   function syncField(inputEl, previewEl) {
     const update = () => {
       previewEl.textContent = inputEl.value;
@@ -83,8 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
   inputs.status.addEventListener('change', syncStatus);
   syncStatus(); // initial sync
 
-  // --- Items Rendering (Targeted Updates) ---
-  
   function createEditorRow(item) {
     const div = document.createElement('div');
     div.className = 'editor-item';
@@ -98,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    // Local listeners for fine-grained updates without full DOM rebuilds
     div.querySelector('.ed-desc').addEventListener('input', e => {
       item.desc = e.target.value;
       updatePreviewRow(item.id);
@@ -161,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
     calculateTotals();
   }
 
-  // --- Summary Calculations ---
   function calculateTotals() {
     const subtotal = items.reduce((sum, item) => sum + (item.qty * item.price), 0);
     preview.subtotal.textContent = formatCurrency(subtotal);
@@ -176,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
       discountAmount = discountVal;
     }
 
-    // Cap discount at subtotal to avoid negative total
     if (discountAmount > subtotal) {
       discountAmount = subtotal;
     }
@@ -202,8 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     editorItemsContainer.appendChild(createEditorRow(newItem));
     preview.tbody.appendChild(createPreviewRow(newItem));
     calculateTotals();
-    
-    // Auto-scroll editor to bottom when adding new item
+
     const edPane = document.querySelector('.editor-pane');
     edPane.scrollTop = edPane.scrollHeight;
   });
@@ -212,10 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.print();
   });
 
-  // Init Boot
   renderAllItems();
-  
-  // Trigger initial visual sync for textareas specifically to ensure pre-filled text shows up correctly
+
   const ev = new Event('input');
   Object.values(inputs).forEach(input => {
     if(input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {

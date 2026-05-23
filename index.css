@@ -32,7 +32,6 @@ body {
   height: 100%;
 }
 
-/* --- Editor Pane --- */
 .editor-pane {
   width: 420px;
   min-width: 320px;
@@ -197,7 +196,6 @@ body {
   margin-top: 0.5rem;
 }
 
-/* --- Preview Pane --- */
 .preview-pane {
   flex: 1;
   padding: 2.5rem;
@@ -206,14 +204,12 @@ body {
   justify-content: center;
   align-items: flex-start;
   background-color: var(--bg-color);
-  /* Custom scrollbar for preview */
-}
+  }
 
 .invoice-paper {
   background: white;
   width: 210mm;
-  min-height: 297mm; /* Standard A4 size */
-  padding: 30mm 25mm;
+  min-height: 297mm;   padding: 30mm 25mm;
   box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
   border-radius: 0.25rem;
   transform-origin: top center;
@@ -396,7 +392,6 @@ body {
   color: var(--danger-color) !important;
 }
 
-/* Responsive Design */
 @media (max-width: 992px) {
   body {
     height: auto;
@@ -464,7 +459,6 @@ body {
   }
 }
 
-/* Print Styles */
 @media print {
   @page {
     margin: 0;
