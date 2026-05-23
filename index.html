@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Invoice Generator</title>
+  <meta name="description" content="Generate beautiful, modern invoices effortlessly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="split-layout">
+    <!-- Editor Pane -->
+    <aside class="editor-pane no-print">
+      <header class="editor-header">
+        <h2>Invoice Details</h2>
+        <button id="print-btn" class="btn btn-primary">Print / Save PDF</button>
+      </header>
+
+      <section class="form-section">
+        <h3>Company Details</h3>
+        <input type="text" id="input-company-name" placeholder="Your Company Name" value="Acme Corp">
+        <textarea id="input-company-address" placeholder="Company Address" rows="3">123 Business Rd.
+City, Country</textarea>
+      </section>
+
+      <section class="form-section">
+        <h3>Client Details</h3>
+        <input type="text" id="input-client-name" placeholder="Client Name" value="Example Client Inc.">
+        <textarea id="input-client-address" placeholder="Client Address" rows="3">456 Corporate Blvd.
+Metropolis, NY 10001</textarea>
+      </section>
+
+      <section class="form-section">
+        <h3>Invoice Meta</h3>
+        <div class="form-row">
+          <label>Invoice No:</label>
+          <input type="text" id="input-invoice-no" value="#INV-0001">
+        </div>
+        <div class="form-row">
+          <label>Date:</label>
+          <input type="date" id="input-invoice-date">
+        </div>
+        <div class="form-row">
+          <label>Currency:</label>
+          <select id="input-currency">
+            <option value="$">USD ($)</option>
+            <option value="€">EUR (€)</option>
+            <option value="£">GBP (£)</option>
+            <option value="¥">JPY (¥)</option>
+            <option value="₹">INR (₹)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Status:</label>
+          <select id="input-status">
+            <option value="pending">Pending</option>
+            <option value="paid">Paid</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h3>Items</h3>
+        <div id="editor-items">
+          <!-- Editor item rows injected here -->
+        </div>
+        <button id="add-item-btn" class="btn btn-secondary mt-2">+ Add Item</button>
+      </section>
+
+      <section class="form-section">
+        <h3>Discount & Notes</h3>
+        <div class="form-row discount-row">
+          <label>Discount:</label>
+          <input type="number" id="input-discount-val" min="0" value="0" step="any">
+          <select id="input-discount-type">
+            <option value="percent">%</option>
+            <option value="fixed">$</option>
+          </select>
+        </div>
+        <textarea id="input-notes" placeholder="Notes / Terms" rows="3">Thank you for your business. Please pay within 30 days.</textarea>
+      </section>
+    </aside>
+
+    <!-- Preview Pane -->
+    <main class="preview-pane">
+      <div class="invoice-paper" id="invoice-preview">
+        <div class="inv-header">
+          <div class="inv-brand">
+            <h1 id="preview-company-name">Acme Corp</h1>
+            <p id="preview-company-address">123 Business Rd.<br>City, Country</p>
+          </div>
+          <div class="inv-meta">
+            <div class="status-badge status-pending" id="preview-status">PENDING</div>
+            <div class="meta-item">
+              <span class="meta-label">Invoice No:</span>
+              <span id="preview-invoice-no">#INV-0001</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Date:</span>
+              <span id="preview-invoice-date"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inv-bill-to">
+          <span class="meta-label">Billed To:</span>
+          <h3 id="preview-client-name">Example Client Inc.</h3>
+          <p id="preview-client-address">456 Corporate Blvd.<br>Metropolis, NY 10001</p>
+        </div>
+
+        <table class="inv-table">
+          <thead>
+            <tr>
+              <th class="col-desc">Description</th>
+              <th class="col-qty">Qty</th>
+              <th class="col-price">Unit Price</th>
+              <th class="col-total">Total</th>
+            </tr>
+          </thead>
+          <tbody id="preview-items-tbody">
+            <!-- Preview items injected here -->
+          </tbody>
+        </table>
+
+        <div class="inv-footer">
+          <div class="inv-notes">
+            <span class="meta-label">Notes / Terms:</span>
+            <p id="preview-notes">Thank you for your business. Please pay within 30 days.</p>
+          </div>
+          <div class="inv-summary">
+            <div class="summary-line">
+              <span>Subtotal</span>
+              <span id="preview-subtotal">$0.00</span>
+            </div>
+            <div class="summary-line text-danger" id="preview-discount-row" style="display: none;">
+              <span>Discount</span>
+              <span id="preview-discount">-$0.00</span>
+            </div>
+            <div class="summary-line total-line">
+              <span>Final Price</span>
+              <span id="preview-total">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
